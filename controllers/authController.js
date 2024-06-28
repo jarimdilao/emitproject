@@ -6,10 +6,13 @@ import JWT from "jsonwebtoken";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer } = req.body;
+    const { name, NID, email, password, phone, address, answer } = req.body;
     //validations
     if (!name) {
       return res.send({ error: "Name is Required" });
+    }
+    if (!NID) {
+      return res.send({ message: "Email is Required" });
     }
     if (!email) {
       return res.send({ message: "Email is Required" });
@@ -40,6 +43,7 @@ export const registerController = async (req, res) => {
     //save
     const user = await new userModel({
       name,
+      NID,
       email,
       phone,
       address,
@@ -97,6 +101,7 @@ export const loginController = async (req, res) => {
       message: "login successfully",
       user: {
         _id: user._id,
+        NID: user.NID,
         name: user.name,
         email: user.email,
         phone: user.phone,
